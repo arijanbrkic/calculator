@@ -1,5 +1,6 @@
 const calcDisplay = document.getElementById("calculator-display");
-calcDisplay.innerText = "0";
+calcDisplay.textContent = "0";
+const numberButtons = document.querySelectorAll('.number-buttons');
 
 // operators
 const add = function(a, b){
@@ -21,3 +22,14 @@ const divide = function(a, b){
         return "You suck";
     }
 }
+
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const value = button.value;
+        if (calcDisplay.textContent === "0") {
+            calcDisplay.textContent = value; 
+        } else {
+            calcDisplay.textContent += value; // Append new value
+        }
+    });
+});
