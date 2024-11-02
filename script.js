@@ -1,8 +1,12 @@
 const calcDisplay = document.getElementById("calculator-display");
 calcDisplay.textContent = "0";
 const numberButtons = document.querySelectorAll('.number-buttons');
+const operatorButtons = document.querySelectorAll('.operators-buttons');
+let firstOperand = null;
+let currentOperator = null;
+let secondOperand = null;
 
-// operators
+// operations
 const add = function(a, b){
     return a + b;
 }
@@ -23,6 +27,7 @@ const divide = function(a, b){
     }
 }
 
+
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         const value = button.value;
@@ -31,5 +36,15 @@ numberButtons.forEach(button => {
         } else {
             calcDisplay.textContent += value; // Append new value
         }
+    });
+});
+
+operatorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        firstOperand = parseFloat(calcDisplay.textContent);
+        console.log(firstOperand);
+        const value = button.value;
+        calcDisplay.textContent = value; 
+        
     });
 });
