@@ -6,45 +6,47 @@ let firstOperand = null;
 let currentOperator = null;
 let secondOperand = null;
 
-// operations
-const add = function(a, b){
-    return a + b;
-}
 
-const subtract = function(a, b){
-    return a - b;
-}
-
-const multiply = function(a, b){
-    return a * b;
-}
-
-const divide = function(a, b){
-    if (b != 0){
-    return a / b;
-    } else {
-        return "You suck";
-    }
-}
-
-
+//logic to get values for the operands
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
-        const value = button.value;
-        if (calcDisplay.textContent === "0") {
-            calcDisplay.textContent = value; 
+        if (calcDisplay.textContent === "0" || calcDisplay.textContent === currentOperator) {
+            calcDisplay.textContent = button.value; 
         } else {
-            calcDisplay.textContent += value; // Append new value
+            calcDisplay.textContent += button.value; // Append new value
         }
     });
 });
-
+// logic to get the operator
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
-        firstOperand = parseFloat(calcDisplay.textContent);
-        console.log(firstOperand);
-        const value = button.value;
-        calcDisplay.textContent = value; 
-        
+        if(firstOperand === null){
+            firstOperand = parseFloat(calcDisplay.textContent);
+   
+        } else if (currentOperator && calcDisplay.textContent !== ''){
+            secondOperand = parseFloat(calcDisplay.textContent);
+            console.log( firstOperand + currentOperator + secondOperand);
+   
+    }
+        currentOperator = button.value;
+        calcDisplay.textContent = currentOperator;
+        console.log( firstOperand + currentOperator + secondOperand);
     });
 });
+
+//perform the calculation based on user inputs
+function operate(currentOperator, firstOperand, secondOperand){
+    switch (currentOperator){
+        case '+':
+            return firstOperand + secondOperand;
+        case '-':
+            return firstOperand - secondOperand;
+        case '*':
+            return firstOperand * secondOperand;
+        case '/':
+            if (secondOperand != 0){
+                return firstOperand / secondOperand;
+            }
+                return "Come on dude...";       
+        }
+}
