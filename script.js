@@ -1,15 +1,25 @@
 const calcDisplay = document.getElementById("calculator-display");
-calcDisplay.textContent = "0";
 const numberButtons = document.querySelectorAll('.number-buttons');
 const operatorButtons = document.querySelectorAll('.operators-buttons');
+calcDisplay.textContent = "0";
 let firstOperand = null;
 let currentOperator = null;
 let secondOperand = null;
-
+let isMaxDigits = false; // Max digits a user can use per operand is 10
 
 //logic to get values for the operands
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
+        // If user adds more than 10 digits, this exits the function
+        if (calcDisplay.textContent.length >= 10) {
+            isMaxDigits = true;
+        }
+        
+        if(isMaxDigits){
+            console.log("Goodbye");
+            return;
+        } 
+
         if (calcDisplay.textContent === "0" || calcDisplay.textContent === currentOperator) {
             calcDisplay.textContent = button.value; 
         } else {
@@ -25,7 +35,6 @@ operatorButtons.forEach(button => {
    
         } else if (currentOperator && calcDisplay.textContent !== ''){
             secondOperand = parseFloat(calcDisplay.textContent);
-            console.log( firstOperand + currentOperator + secondOperand);
    
     }
         currentOperator = button.value;
