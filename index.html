@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Calculator</title>
 </head>
 <body>
     <!-- Create buttons for 0-9 AND the operators (+ - x / A AC) -->
-    <div id="calculator-container">
+    <div class="calculator-container">
         <div class="calculator-output" id="calculator-display"></div>
-        <!-- Number buttons -->
-        <button class="number-buttons" value="1">1</button>
-        <button class="number-buttons" value="2">2</button>
-        <button class="number-buttons" value="3">3</button>
-        <button class="number-buttons" value="4">4</button>
-        <button class="number-buttons" value="5">5</button>
-        <button class="number-buttons" value="6">6</button>
-        <button class="number-buttons" value="7">7</button>
-        <button class="number-buttons" value="8">8</button>
-        <button class="number-buttons" value="9">9</button>
-        <button class="number-buttons" value="0">0</button>
-        <!-- Operation number-buttons -->
-         <button class="operators-buttons" value="+" id="add-button">+</button>
-         <button class="operators-buttons" value="-" id="subtract-button">-</button>
-         <button class="operators-buttons" value="*" id="multiply-button">x</button>
-         <button class="operators-buttons" value="/" id="divide-button">/</button>
-         <button value="=" id="equals-button">=</button>
-         <button value="." id="decimal-button">.</button>
-         <button value="clear" id="clear-button">CLEAR</button>
+        <div class="first-row">    
+            <button value="clear">AC</button>
+            <button value="delete">DEL</button>
+        </div>
+        <div class="second-row">
+            <button class="number-buttons" value="7">7</button>
+            <button class="number-buttons" value="8">8</button>
+            <button class="number-buttons" value="9">9</button>
+            <button class="operators-buttons" value="/" id="divide-button">/</button>
+        </div>
+        <div class="third-row">
+            <button class="number-buttons" value="4">4</button>
+            <button class="number-buttons" value="5">5</button>
+            <button class="number-buttons" value="6">6</button>
+            <button class="operators-buttons" value="*" id="multiply-button">x</button>
+        </div>
+        <div class="fourth-row">
+            <button class="number-buttons" value="1">1</button>
+            <button class="number-buttons" value="2">2</button>
+            <button class="number-buttons" value="3">3</button>
+            <button class="operators-buttons" value="-" id="subtract-button">-</button>
+        </div>
+        <div class="fifth-row">
+            <button class="operators-buttons" value=".">.</button>
+            <button class="number-buttons" value="0">0</button>
+            <button class="operators-buttons" value="=">=</button>
+            <button class="operators-buttons" value="+" id="add-button">+</button>
+        </div>
     </div>
 
     <script src="script.js"></script>

@@ -50,3 +50,8 @@ function operate(currentOperator, firstOperand, secondOperand){
                 return "Come on dude...";       
         }
 }
+
+function calculate(){
+    const result = operate();
+    calcDisplay.textContent = result;
+}
