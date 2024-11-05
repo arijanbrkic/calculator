@@ -2,6 +2,8 @@ const calcDisplay = document.getElementById("calculator-display");
 const numberButtons = document.querySelectorAll('.number-buttons');
 const operatorButtons = document.querySelectorAll('.operators-buttons');
 const equalsButton = document.getElementById('equals-button');
+const clearButton = document.getElementById('clear-button');
+const deleteButton = document.getElementById('delete-button');
 calcDisplay.textContent = '';
 let firstOperand = null;
 let secondOperand = null;
@@ -51,12 +53,22 @@ operatorButtons.forEach(button => {
 });
 // Equals button logic to perform operation
 equalsButton.addEventListener('click', () => {
+    if (firstOperand !== null && currentOperator !== null){
     secondOperand = parseFloat(calcDisplay.textContent);
     calculate();
     firstOperand = null;
-    currentOperator = null
+    currentOperator = null;
+    }
 });
-
+// Clear/AC button logic to clear all previous operations
+clearButton.addEventListener('click', () => {
+    calcDisplay.textContent = '';
+    firstOperand = null;
+    currentOperator = null;
+    secondOperand = null;
+    result = null;
+    console.log(result);
+});
 // Perform the calculation based on user inputs
 function operate(currentOperator, firstOperand, secondOperand){
     switch (currentOperator){
