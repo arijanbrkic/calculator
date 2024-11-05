@@ -22,16 +22,17 @@ body {
 .calculator-output {
     display: flex;
     justify-content: right;
+    align-items: flex-end;
     background-color: rgba(49, 54, 56, 0.9);
     color: rgb(232, 233, 235);
-    padding: 1vh;
+    padding: 0;
     border-radius: 2px;
-    font-size: 5.5vh;
+    font-size: 6.5vh;
     max-width: 100%;
-    overflow: hidden;
+    height: 10vh;
 }
 /* Operators and Numbers */
-.number-buttons, .operators-buttons{
+.number-buttons, .non-numbers{
     font-size: 7.5vh;
     padding: 5px;
     aspect-ratio: 5;
@@ -39,8 +40,8 @@ body {
 .number-buttons{
     background-color: rgb(232, 233, 235);
 }
-.operators-buttons {
-    background-color: aquamarine;
+.non-numbers {
+    background-color: red;
 }
 /* AC and DEL buttons */
 .first-row {

@@ -1,7 +1,8 @@
 const calcDisplay = document.getElementById("calculator-display");
 const numberButtons = document.querySelectorAll('.number-buttons');
 const operatorButtons = document.querySelectorAll('.operators-buttons');
-calcDisplay.textContent = "0";
+const equalsButton = document.getElementById('equals-button');
+calcDisplay.textContent = '';
 let firstOperand = null;
 let secondOperand = null;
 let currentOperator = null;
@@ -48,8 +49,15 @@ operatorButtons.forEach(button => {
         console.log( firstOperand + currentOperator + secondOperand);
     });
 });
+// Equals button logic to perform operation
+equalsButton.addEventListener('click', () => {
+    secondOperand = parseFloat(calcDisplay.textContent);
+    calculate();
+    firstOperand = null;
+    currentOperator = null
+});
 
-//perform the calculation based on user inputs
+// Perform the calculation based on user inputs
 function operate(currentOperator, firstOperand, secondOperand){
     switch (currentOperator){
         case '+':
@@ -67,6 +75,8 @@ function operate(currentOperator, firstOperand, secondOperand){
 }
 
 function calculate(){
-    const result = operate();
+    const result = operate(currentOperator, firstOperand, secondOperand);
     calcDisplay.textContent = result;
 }
+
+operate();
