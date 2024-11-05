@@ -3,11 +3,17 @@ const numberButtons = document.querySelectorAll('.number-buttons');
 const operatorButtons = document.querySelectorAll('.operators-buttons');
 calcDisplay.textContent = "0";
 let firstOperand = null;
-let currentOperator = null;
 let secondOperand = null;
+let currentOperator = null;
 let isMaxDigits = false; // Max digits a user can use per operand is 10
 
-//logic to get values for the operands
+// Calculator logic
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+const divide = (a, b) => a / b;
+const multiply = (a, b) => a * b; 
+
+// Logic to get values for the operands
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         // If user adds more than 10 digits, this exits the function
