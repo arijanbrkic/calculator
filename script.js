@@ -16,18 +16,21 @@ const subtract = (a, b) => a - b;
 const divide = (a, b) => a / b;
 const multiply = (a, b) => a * b; 
 
-// Logic to get values for the operands
+// Logic to get values for the first operand
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         // If user adds more than 10 digits, this exits the function
         if (calcDisplay.textContent.length >= 10) {
             isMaxDigits = true;
         }
-        
         if(isMaxDigits){
             console.log("Goodbye");
             return;
-        } 
+        }
+        // User can not add more than one decimal point
+        if (button.value === '.' && calcDisplay.textContent.includes('.')) {
+            return;
+        }
 
         if (calcDisplay.textContent === "0" || calcDisplay.textContent === currentOperator) {
             calcDisplay.textContent = button.value; 
@@ -36,16 +39,15 @@ numberButtons.forEach(button => {
         }
     });
 });
-// logic to get the operator
+// Logic to get the operator
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
         if(firstOperand === null){
             firstOperand = parseFloat(calcDisplay.textContent);
    
-        } else if (currentOperator && calcDisplay.textContent !== ''){
+        } else if(currentOperator && calcDisplay.textContent !== ''){
             secondOperand = parseFloat(calcDisplay.textContent);
-   
-    }
+        }
         currentOperator = button.value;
         calcDisplay.textContent = currentOperator;
         console.log( firstOperand + currentOperator + secondOperand);
@@ -53,12 +55,25 @@ operatorButtons.forEach(button => {
 });
 // Equals button logic to perform operation
 equalsButton.addEventListener('click', () => {
-    if (firstOperand !== null && currentOperator !== null){
-    secondOperand = parseFloat(calcDisplay.textContent);
+// If there is no first operand, no calculation will be made    
+    if (firstOperand === null || currentOperator === null || isNaN(firstOperand)){
+        console.log("You need a first operand");
+        if(!isNaN(calcDisplay.textContent)){
+            firstOperand = parseFloat(calcDisplay.textContent);
+        }
+        return;
+    }
+    if (!isNaN(calcDisplay.textContent) && firstOperand !== null && currentOperator) {
+        secondOperand = parseFloat(calcDisplay.textContent);
+    }
+    if (secondOperand === null || isNaN(secondOperand)) {
+        return; // Exit without calculating
+    }
+
     calculate();
     firstOperand = null;
     currentOperator = null;
-    }
+    
 });
 // Clear/AC button logic to clear all previous operations
 clearButton.addEventListener('click', () => {
@@ -82,7 +97,7 @@ function operate(currentOperator, firstOperand, secondOperand){
             if (secondOperand != 0){
                 return firstOperand / secondOperand;
             }
-                return "Come on dude...";       
+                return "Bruh";       
         }
 }
 
