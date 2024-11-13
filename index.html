@@ -9,7 +9,10 @@
 <body>
     <!-- Create buttons for 0-9 AND the operators (+ - x / A AC) -->
     <div class="calculator-container">
-        <div class="calculator-output" id="calculator-display"></div>
+        <div class="calculator-output">
+            <div id="previous-operation" class="previous-operation"></div> <!-- Smaller text -->
+            <div id="current-operation" class="current-operation"></div>  <!-- Larger text -->
+        </div>        
         <div class="first-row">    
             <button id="clear-button">AC</button>
             <button id="delete-button">DEL</button>
