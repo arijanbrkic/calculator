@@ -7,11 +7,14 @@ const calculator = {
     clearButton : document.getElementById('clear-button'),
     deleteButton : document.getElementById('delete-button'),
 
-    currentOperator : null,
-    previousOperation : '',
-    currentOperation : '',
-
-    isMaxDigits : false, // Max digits a user can use per operand is 10
+    // Initial values
+    init: function() {
+        this.currentOperationDisplay.textContent = '0'; // calculator display by default is 0
+        this.previousOperation = '';
+        this.currentOperator = null;
+        this.currentOperation = '';
+        this.isMaxDigits = false; // Max digits a user can use per operand is 10
+    },
 
     // Calculator logic
     add : (a, b) => a + b,
@@ -56,7 +59,7 @@ const calculator = {
                 // If there is a valid first operand and an operator, perform the calculation
                 if (this.currentOperation !== null && this.currentOperator !== null) {
                     this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
-                    this.previousOperation = calculate();  // Perform the operation and update the display
+                    this.previousOperation = this.calculate();  // Perform the operation and update the display
                     this.currentOperation = null;  // Reset second operand
                 } else {
                     // If no calculation has been made yet, set the first operand
@@ -66,15 +69,84 @@ const calculator = {
                 // Update the current operator and display it
                 this.currentOperator = button.value;
                 this.currentOperationDisplay.textContent = this.currentOperator;
-                console.log(this.currentOperation + this.currentOperator + this.previousOperation)
             });
         });
-    }
+    },
+        // Equals button logic to perform operation
+    handleEqualsButtons : function() {
+        this.equalsButton.addEventListener('click', () => {
+            // If there is no first operand, no calculation will be made    
+            if (this.previousOperation === null || this.currentOperator === null || isNaN(this.previousOperation)){
+                return;
+            }
+            // However if a number is displayed, we will use this as the first operand
+            if(!isNaN(parseFloat(this.currentOperationDisplay.textContent)) && this.currentOperationDisplay.textContent.trim() !== ''){
+                this.previousOperation = parseFloat(this.currentOperationDisplay.textContent);
+            }
+        
+            if (!isNaN(this.currentOperationDisplay.textContent) && this.previousOperation !== null && this.currentOperator) {
+                this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
+            }
+        
+            if (this.currentOperation === null || isNaN(this.currentOperation)) {
+                return; // Exit without calculating
+            }
+        
+            this.calculate();
+            this.previousOperation = null;
+            this.currentOperator = null;
 
-    
+        });
+    },
+
+        // Clear/AC button logic to clear all previous operations
+    handleClearButton : function(){
+        this.clearButton.addEventListener('click', () => {
+            this.currentOperationDisplay.textContent = '0';
+            this.previousOperation = 0;
+            this.currentOperator = null;
+            this.currentOperation = 0;
+            this.isMaxDigits = false;
+        });
+    },   
+        // Perform the calculation based on user inputs
+    operate : function() {
+        switch (this.currentOperator){
+            case '+':
+                return this.previousOperation + this.currentOperation;
+            case '-':
+                return this.previousOperation - this.currentOperation;
+            case '*':
+                return this.previousOperation * this.currentOperation;
+            case '/':
+                if (this.currentOperation != 0){
+                    return this.previousOperation / this.currentOperation;
+                }
+                    return "Bruh";       
+            }
+    },
+        // Convert larger numbers into scientific notation
+    handleScientificNumber : function(num) {
+        if (num >= 1e10 || num <= 1e-10) {
+            return num.toExponential(2);
+        }
+        return num;
+    },
+
+    calculate : function(){
+        let result = this.operate(this.currentOperator, this.previousOperation, this.currentOperation);
+        this.currentOperationDisplay.textContent = this.handleScientificNumber(result);
+        return result;
+    },
+        
+// }
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     calculator.handleNumberButtons();
     calculator.handleOperatorButtons();
+    calculator.handleEqualsButtons();
+    calculator.handleClearButton();
+    calculator.init();
 });
