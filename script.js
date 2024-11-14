@@ -12,6 +12,7 @@ const calculator = {
         this.currentOperationDisplay.textContent = '0'; // calculator display by default is 0
         this.previousOperation = '';
         this.currentOperator = null;
+        this.previousOperator = null;
         this.currentOperation = '';
         this.isMaxDigits = false; // Max digits a user can use per operand is 10
     },
@@ -55,51 +56,47 @@ const calculator = {
                 if (isNaN(parseFloat(this.currentOperationDisplay.textContent)) || this.currentOperationDisplay.textContent.trim() === '') {
                     return;
                 }
-            
-                // If there is a valid first operand and an operator, perform the calculation
-                if (this.currentOperation !== null && this.currentOperator !== null) {
+
+                // If the previousOperation is not null, calculate the result before storing the operator
+                if (this.previousOperation !== null && this.currentOperator !== null) {
                     this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
-                    this.previousOperation = this.calculate();  // Perform the operation and update the display
-                    this.currentOperation = null;  // Reset second operand
+                    this.previousOperation = this.calculate();
+                    this.currentOperation = null; // Reset current operand for next calculation
                 } else {
-                    // If no calculation has been made yet, set the first operand
+                    // Otherwise, just set the previous operand
                     this.previousOperation = parseFloat(this.currentOperationDisplay.textContent);
                 }
-            
+
                 // Update the current operator and display it
                 this.currentOperator = button.value;
-                this.currentOperationDisplay.textContent = `${this.previousOperation} ${this.currentOperator} `;
+                this.currentOperationDisplay.textContent = '0';
+                this.previousOperationDisplay.textContent = `${this.previousOperation} ${this.currentOperator}`;
             });
         });
     },
-        // Equals button logic to perform operation
-    handleEqualsButtons : function() {
+
+    // Equals button logic to perform operation
+    handleEqualsButton : function() {
         this.equalsButton.addEventListener('click', () => {
-            // If there is no first operand, no calculation will be made    
+            // If there is no first operand or operator, exit
             if (this.previousOperation === null || this.currentOperator === null){
                 return;
             }
-            // However if a number is displayed, we will use this as the first operand
-            if(!isNaN(parseFloat(this.currentOperationDisplay.textContent)) && this.currentOperationDisplay.textContent.trim() !== ''){
-                this.previousOperation = parseFloat(this.currentOperationDisplay.textContent);
+            // If there is a number on the display, set it as current operand
+            this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
+            if (isNaN(this.currentOperation)) {
+                return;
             }
-        
-            if (!isNaN(this.currentOperationDisplay.textContent) && this.previousOperation !== null && this.currentOperator) {
-                this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
-            }
-        
-            if (this.currentOperation === null || isNaN(this.currentOperation)) {
-                return; // Exit without calculating
-            }
-        
-            this.calculate();
+
+            let result = this.calculate();
+            this.previousOperationDisplay.textContent = '';
+            this.currentOperationDisplay.textContent = this.handleScientificNumber(result);
             this.previousOperation = null;
             this.currentOperator = null;
-
         });
     },
 
-        // Clear/AC button logic to clear all previous operations
+    // Clear/AC button logic to clear all previous operations
     handleClearButton : function(){
         this.clearButton.addEventListener('click', () => {
             this.currentOperationDisplay.textContent = '0';
@@ -109,7 +106,8 @@ const calculator = {
             this.isMaxDigits = false;
         });
     },   
-        // Perform the calculation based on user inputs
+
+    // Perform the calculation based on user inputs
     operate : function() {
         switch (this.currentOperator){
             case '+':
@@ -123,30 +121,26 @@ const calculator = {
                     return this.previousOperation / this.currentOperation;
                 }
                     return "Bruh";       
-            }
+        }
     },
-        // Convert larger numbers into scientific notation
+
+    // Convert larger numbers into scientific notation
     handleScientificNumber : function(num) {
-        if (num >= 1e10 || num <= 1e-10) {
+        if (Math.abs(num) >= 1e10 || Math.abs(num) <= 1e-10) {
             return num.toExponential(2);
         }
         return num;
     },
 
     calculate : function(){
-        let result = this.operate(this.currentOperator, this.previousOperation, this.currentOperation);
-        this.currentOperationDisplay.textContent = this.handleScientificNumber(result);
-        return result;
+        return this.operate();
     },
-        
-// }
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     calculator.handleNumberButtons();
     calculator.handleOperatorButtons();
-    calculator.handleEqualsButtons();
+    calculator.handleEqualsButton();
     calculator.handleClearButton();
     calculator.init();
 });
