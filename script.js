@@ -1,47 +1,80 @@
-const currentOperationDisplay = document.getElementById("current-operation");
-const previousOperationDisplay = document.getElementById("previous-operation");
-const numberButtons = document.querySelectorAll('.number-buttons');
-const operatorButtons = document.querySelectorAll('.operators-buttons');
-const equalsButton = document.getElementById('equals-button');
-const clearButton = document.getElementById('clear-button');
-const deleteButton = document.getElementById('delete-button');
+const calculator = {
+    currentOperationDisplay : document.getElementById("current-operation"),
+    previousOperationDisplay : document.getElementById("previous-operation"),
+    numberButtons : document.querySelectorAll('.number-buttons'),
+    operatorButtons : document.querySelectorAll('.operators-buttons'),
+    equalsButton : document.getElementById('equals-button'),
+    clearButton : document.getElementById('clear-button'),
+    deleteButton : document.getElementById('delete-button'),
 
-let firstOperand = null;
-let secondOperand = null;
-let currentOperator = null;
-let previousOperation = '';
-let currentOperation = '';
+    currentOperator : null,
+    previousOperation : '',
+    currentOperation : '',
 
-let isMaxDigits = false; // Max digits a user can use per operand is 10
+    isMaxDigits : false, // Max digits a user can use per operand is 10
 
+    // Calculator logic
+    add : (a, b) => a + b,
+    subtract : (a, b) => a - b,
+    divide : (a, b) => a / b,
+    multiply : (a, b) => a * b, 
 
-// Calculator logic
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const divide = (a, b) => a / b;
-const multiply = (a, b) => a * b; 
-
-function handleNumberButtons() {
-    numberButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // If user adds more than 10 digits, this exits the function
-            if (calcDisplay.textContent.length >= 10) {
-                isMaxDigits = true;
-            }
-            if(isMaxDigits){
-                console.log("Goodbye");
-                return;
-            }
-            // User can not add more than one decimal point
-            if (button.value === '.' && calcDisplay.textContent.includes('.')) {
-                return;
-            }
-    
-            if (calcDisplay.textContent === "0" || calcDisplay.textContent === currentOperator) {
-                calcDisplay.textContent = button.value; 
-            } else {
-                calcDisplay.textContent += button.value; // Append new value
-            }
+    handleNumberButtons : function() {
+        this.numberButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // If user adds more than 10 digits, this exits the function
+                if (this.currentOperationDisplay.textContent.length >= 10) {
+                    this.isMaxDigits = true;
+                }
+                if(this.isMaxDigits){
+                    console.log("Goodbye");
+                    return;
+                }
+                // User can not add more than one decimal point
+                if (button.value === '.' && this.currentOperationDisplay.textContent.includes('.')) {
+                    return;
+                }
+        
+                if (this.currentOperationDisplay.textContent === "0" || this.currentOperationDisplay.textContent === this.currentOperator) {
+                    this.currentOperationDisplay.textContent = button.value; 
+                } else {
+                    this.currentOperationDisplay.textContent += button.value; // Append new value
+                }
+            });
         });
-    });
+    },
+
+    // Logic to get the operator
+    handleOperatorButtons : function() {
+        this.operatorButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Exit if the current display content is invalid
+                if (isNaN(parseFloat(this.currentOperationDisplay.textContent)) || this.currentOperationDisplay.textContent.trim() === '') {
+                    return;
+                }
+            
+                // If there is a valid first operand and an operator, perform the calculation
+                if (this.currentOperation !== null && this.currentOperator !== null) {
+                    this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
+                    this.previousOperation = calculate();  // Perform the operation and update the display
+                    this.currentOperation = null;  // Reset second operand
+                } else {
+                    // If no calculation has been made yet, set the first operand
+                    this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
+                }
+            
+                // Update the current operator and display it
+                this.currentOperator = button.value;
+                this.currentOperationDisplay.textContent = this.currentOperator;
+                console.log(this.currentOperation + this.currentOperator + this.previousOperation)
+            });
+        });
+    }
+
+    
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    calculator.handleNumberButtons();
+    calculator.handleOperatorButtons();
+});
