@@ -63,12 +63,12 @@ const calculator = {
                     this.currentOperation = null;  // Reset second operand
                 } else {
                     // If no calculation has been made yet, set the first operand
-                    this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
+                    this.previousOperation = parseFloat(this.currentOperationDisplay.textContent);
                 }
             
                 // Update the current operator and display it
                 this.currentOperator = button.value;
-                this.currentOperationDisplay.textContent = this.currentOperator;
+                this.currentOperationDisplay.textContent = `${this.previousOperation} ${this.currentOperator} `;
             });
         });
     },
@@ -76,7 +76,7 @@ const calculator = {
     handleEqualsButtons : function() {
         this.equalsButton.addEventListener('click', () => {
             // If there is no first operand, no calculation will be made    
-            if (this.previousOperation === null || this.currentOperator === null || isNaN(this.previousOperation)){
+            if (this.previousOperation === null || this.currentOperator === null){
                 return;
             }
             // However if a number is displayed, we will use this as the first operand
