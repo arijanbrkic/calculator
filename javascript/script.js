@@ -55,6 +55,18 @@ const calculator = {
             button.addEventListener('click', () => {
                 this.isMaxDigits = false;
 
+                // Allow users to use - operator as a prefix for a negative number
+                if (button.value === '-' && (this.currentOperationDisplay.textContent === '0' || this.currentOperationDisplay.textContent === '')) {
+                    // If the current number is not negative, make it negative
+                    if (!this.currentOperationDisplay.textContent.startsWith('-')) {
+                        this.currentOperationDisplay.textContent = '-';
+                    } else {
+                        // If the number is already negative, remove the negative sign
+                        this.currentOperationDisplay.textContent = this.currentOperationDisplay.textContent.slice(1);
+                    }
+                    return;  // Don't do anything else (this is just toggling the sign)
+                }
+
                  // Check if an operator is already selected and allow switching
                 if (this.currentOperator !== null && this.currentOperationDisplay.textContent === '0') {
                     // Just update the operator and display, no need to reset operands
@@ -117,19 +129,26 @@ const calculator = {
 
     // Format numbers for display
     handleNumberDisplay: function(num) {
-        // If the number has decimals, limit to 15 digits
-        if (num.toString().includes('.') && num.toString().length > 15) {
-            // Limit the decimal points to 15 digits
-            return num.toFixed(15);
+        // Convert number to string to count total digits
+        let numStr = num.toString();
+    
+        // If the number has decimals, we trim the number to 15 digits
+        // including integer and decimal parts
+        if (numStr.includes('.')) {
+            let [integerPart, decimalPart] = numStr.split('.');
+    
+            if (integerPart.length + decimalPart.length > 15) {
+                decimalPart = decimalPart.slice(0, 15 - integerPart.length);
+            }
+    
+            
+            return integerPart + '.' + decimalPart;
         }
-
-        // If the number is too large, convert to scientific notation
-        if (Math.abs(num) >= 1e15 || Math.abs(num) <= 1e-15) {
-            return num.toExponential(10); // 10 decimal places for scientific notation
-        }
-
-        return num;
+    
+        // If it's a whole number, simply return it (no decimal part)
+        return numStr;
     },
+    
 
     //Reset all operations and operator to original values
     resetCalculator : function() {
