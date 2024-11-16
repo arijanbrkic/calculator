@@ -1,49 +1,68 @@
+
 body {
     margin: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     width: 100%;
-    background-color: #070707;
+    background-color: #cacaca;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-
 }
 .calculator-container {
     display: grid;
+    grid-template-rows: 15vh repeat(4, 1fr);
     margin: 0 auto;
     max-width: 300px; 
-    gap: 10px;
-    background-color: rgb(91, 109, 113);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 3px 8px 20px rgba(33, 202, 10, 0.3);
+    position: relative;
+    gap: 1vh;
+    background-color: rgba(28, 29, 28, 0.7);
+    padding: 1em 2em 3em;
+    border: 2px solid #222;
+    border-radius: 5vh;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+.calculator-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../imgs/calcBackground.png');
+    background-size: auto;
+    background-position: center;
+    background-repeat: repeat;
+    opacity: 0.3;
+    border-radius: inherit;
+    z-index: -1;
 }
 .calculator-output {
     display: flex;
     flex-direction: column;
-    padding: 5px 10px;
+    padding: 5px 10px; 
     margin: 2px;
     justify-content: space-around;
     align-items: flex-end;
-    background-color: rgba(49, 54, 56, 0.9);
-    color: rgb(232, 233, 235);
-    border-radius: 2px;
-    font-size: 6.5vh;
+    background-color: #cacaca;
+    border-radius: 10px;
     max-width: 100%;
     height: 12vh;
 }
 /* Operators and Numbers */
-.number-buttons, .non-numbers{
+.number-buttons, .non-numbers {
     font-size: 7.5vh;
-    padding: 5px;
-    aspect-ratio: 5;
+    padding: 5px; 
+    height: 10vh;
+    width: 10vh;
 }
-.number-buttons{
-    background-color: rgb(232, 233, 235);
+.number-buttons {
+    background-color: #cacaca;
 }
 .non-numbers {
-    background-color: red;
+    background-color: #222;
+    color: #afafaf
 }
 /* AC and DEL buttons */
 .first-row {
@@ -52,33 +71,26 @@ body {
     padding: 0;
 }
 .first-row > button {
-    background-color: aqua;
     font-size: 7.5vh;
-    padding: 0 30px;
     margin: 0;
-    aspect-ratio: auto;
     flex: 1;
-}
-
-.first-row > button:hover {
-    background-color: red;
-    font-size: 7.5vh;
-    padding: 0 30px;
-    margin: 0;
-    aspect-ratio: 3;
-    transition: all 0.2s ease-in-out;
 }
 button {
     border-radius: 10px;
+    color: #222;
 }
 
 .previous-operation {
-    font-size: 20px;
-    color: gray;
-  }
-  
-  .current-operation {
-    font-size: 30px;
-    font-weight: bold;
-  }
-  
+    font-size: 3vh;
+    color: #777;
+}
+.current-operation {
+    font-size: 7vh;
+    color: #222;
+}
+#clear-button {
+    background-color: #46B1C9;
+}
+#delete-button {
+    background-color: #F19A3E;
+}

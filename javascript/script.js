@@ -15,7 +15,7 @@ const calculator = {
         this.currentOperator = null;
         this.previousOperator = null;
         this.currentOperation = '';
-        this.isMaxDigits = false; // Max digits a user can use per operand is 15
+        this.isMaxDigits = false; // Max digits a user can use per operand is 10
     },
 
     // Calculator logic
@@ -27,8 +27,8 @@ const calculator = {
     handleNumberButtons : function() {
         this.numberButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // If user adds more than 15 digits, this exits the function
-                if (this.currentOperationDisplay.textContent.length >= 15) {
+                // If user adds more than 10 digits, this exits the function
+                if (this.currentOperationDisplay.textContent.length >= 10) {
                     this.isMaxDigits = true;
                 }
                 if(this.isMaxDigits){
@@ -132,17 +132,21 @@ const calculator = {
         // Convert number to string to count total digits
         let numStr = num.toString();
     
-        // If the number has decimals, we trim the number to 15 digits
+        // If the number has decimals, we trim the number to 10 digits
         // including integer and decimal parts
         if (numStr.includes('.')) {
             let [integerPart, decimalPart] = numStr.split('.');
     
-            if (integerPart.length + decimalPart.length > 15) {
-                decimalPart = decimalPart.slice(0, 15 - integerPart.length);
+            if (integerPart.length + decimalPart.length > 10) {
+                decimalPart = decimalPart.slice(0, 10 - integerPart.length);
             }
     
             
             return integerPart + '.' + decimalPart;
+        }
+
+        if (num >= 1e10 || num <= 1e-10) {
+            return num.toExponential(2);
         }
     
         // If it's a whole number, simply return it (no decimal part)
