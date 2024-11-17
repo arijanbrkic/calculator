@@ -52,6 +52,7 @@ const calculator = {
         } else {
             this.currentOperationDisplay.textContent += value; // Append new value
         }
+        this.currentOperation = parseFloat(this.currentOperationDisplay.textContent);
     },
 
     // Logic to get the operator
@@ -106,7 +107,7 @@ const calculator = {
         } else {
             // Set the first operand if no previous operation exists
             this.previousOperation = parseFloat(this.currentOperationDisplay.textContent);
-            this.result = this.previousOperation; // Set result to the first operand initially
+            this.result = this.handleNumberDisplay(this.previousOperation); // Set result to the first operand initially
             this.previousOperationDisplay.textContent = `${this.result} ${operator}`;
             this.currentOperationDisplay.textContent = '0';
         }
@@ -142,7 +143,7 @@ const calculator = {
 
     // Format numbers for display
     handleNumberDisplay: function(num) {
-        let numStr = num.toString();
+        let numStr = num.toLocaleString();
     
         if (numStr.includes('.')) {
             let [integerPart, decimalPart] = numStr.split('.');
@@ -154,11 +155,15 @@ const calculator = {
             return integerPart + '.' + decimalPart;
         }
 
-        if (num >= 1e10 || num <= 1e-10) {
+        if (num === 0) {
+            this.isMaxDigits = false;
+            return 0;
+        } else if (num >= 1e10 || num <= 1e-10) {
             return num.toExponential(2);
         }
-    
-        return numStr;
+        
+        return numStr.toLocaleString();
+        
     },
     
     // Reset all operations and operator to original values
