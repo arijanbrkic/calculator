@@ -222,6 +222,28 @@ const calculator = {
         if (key === 'c' || key === 'C') {
             this.resetCalculator();
         }
+
+        // Handle delete button (Backspace)
+        if (key === 'Backspace') {
+            this.handleDeleteButton();
+        }
+    },
+
+    // Handle the delete button functionality
+    handleDeleteButton: function() {
+        let currentText = this.currentOperationDisplay.textContent;
+
+        // If the current text is '0' or empty, do nothing
+        if (currentText === '0' || currentText === '') {
+            return;
+        }
+
+        this.currentOperationDisplay.textContent = currentText.slice(0, -1);
+
+        // If the display is empty after deleting, set it back to 0
+        if (this.currentOperationDisplay.textContent === '') {
+            this.currentOperationDisplay.textContent = '0';
+        }
     }
 }
 
