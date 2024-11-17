@@ -225,12 +225,18 @@ const calculator = {
 
         // Handle delete button (Backspace)
         if (key === 'Backspace') {
-            this.handleDeleteButton();
+            this.handleDelete();
         }
     },
 
+    handleDeleteButton : function() {
+        this.deleteButton.addEventListener('click', () => {
+            this.handleDelete();
+        });
+    },
+
     // Handle the delete button functionality
-    handleDeleteButton: function() {
+    handleDelete: function() {
         let currentText = this.currentOperationDisplay.textContent;
 
         // If the current text is '0' or empty, do nothing
@@ -254,8 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     calculator.handleClearButton();
     calculator.resetCalculator();
     calculator.init();
-
-    // Add event listener for keyboard input
+    calculator.handleDeleteButton();
     document.addEventListener('keydown', (event) => {
         calculator.handleKeyboardInput(event);
     });
