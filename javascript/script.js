@@ -15,7 +15,7 @@ const calculator = {
         this.currentOperator = null;
         this.previousOperator = null;
         this.currentOperation = '';
-        this.isMaxDigits = false; // Max digits a user can use per operand is 10
+        this.isMaxDigits = false; // Max digits a user can use per operand is 9
     },
 
     // Calculator logic
@@ -27,8 +27,8 @@ const calculator = {
     handleNumberButtons : function() {
         this.numberButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // If user adds more than 10 digits, this exits the function
-                if (this.currentOperationDisplay.textContent.length >= 10) {
+                // If user adds more than 9 digits, this exits the function
+                if (this.currentOperationDisplay.textContent.length >= 9) {
                     this.isMaxDigits = true;
                 }
                 if(this.isMaxDigits){
@@ -132,13 +132,13 @@ const calculator = {
         // Convert number to string to count total digits
         let numStr = num.toString();
     
-        // If the number has decimals, we trim the number to 10 digits
+        // If the number has decimals, we trim the number to 9 digits
         // including integer and decimal parts
         if (numStr.includes('.')) {
             let [integerPart, decimalPart] = numStr.split('.');
     
-            if (integerPart.length + decimalPart.length > 10) {
-                decimalPart = decimalPart.slice(0, 10 - integerPart.length);
+            if (integerPart.length + decimalPart.length > 9) {
+                decimalPart = decimalPart.slice(0, 9 - integerPart.length);
             }
     
             
@@ -184,7 +184,7 @@ const calculator = {
                 if (this.currentOperation != 0){
                     return this.previousOperation / this.currentOperation;
                 }
-                    return "Bruh";       
+                    return "DON'T DO IT";       
         }
     },
 

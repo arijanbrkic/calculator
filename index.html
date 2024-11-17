@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
     <title>Calculator</title>
     <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
@@ -17,38 +17,44 @@
                 <div id="current-operation" class="current-operation"></div>  <!-- Larger text -->
             </div>        
             <div class="first-row">    
-                <button onlick="this.blur();" id="clear-button">AC</button>
-                <button onlick="this.blur();" id="delete-button">DEL</button>
+                <button onclick="this.blur();" id="clear-button">AC</button>
+                <button onclick="this.blur();" id="delete-button">DEL</button>
             </div>
             <div class="second-row">
-                <button onlick="this.blur();" class="number-buttons" value="7">7</button>
-                <button onlick="this.blur();" class="number-buttons" value="8">8</button>
-                <button onlick="this.blur();" class="number-buttons" value="9">9</button>
-                <button onlick="this.blur();" class="operators-buttons non-numbers" value="/" id="divide-button">/</button>
+                <button onclick="this.blur();" class="number-buttons" value="7">7</button>
+                <button onclick="this.blur();" class="number-buttons" value="8">8</button>
+                <button onclick="this.blur();" class="number-buttons" value="9">9</button>
+                <button onclick="this.blur();" class="operators-buttons non-numbers" value="/" id="divide-button">/</button>
             </div>
             <div class="third-row">
-                <button onlick="this.blur();" class="number-buttons" value="4">4</button>
-                <button onlick="this.blur();" class="number-buttons" value="5">5</button>
-                <button onlick="this.blur();" class="number-buttons" value="6">6</button>
-                <button onlick="this.blur();" class="operators-buttons non-numbers" value="*" id="multiply-button">x</button>
+                <button onclick="this.blur();" class="number-buttons" value="4">4</button>
+                <button onclick="this.blur();" class="number-buttons" value="5">5</button>
+                <button onclick="this.blur();" class="number-buttons" value="6">6</button>
+                <button onclick="this.blur();" class="operators-buttons non-numbers" value="*" id="multiply-button">x</button>
             </div>
             <div class="fourth-row">
-                <button onlick="this.blur();" class="number-buttons" value="1">1</button>
-                <button onlick="this.blur();" class="number-buttons" value="2">2</button>
-                <button onlick="this.blur();" class="number-buttons" value="3">3</button>
-                <button onlick="this.blur();" class="operators-buttons non-numbers" value="-" id="subtract-button">-</button>
+                <button onclick="this.blur();" class="number-buttons" value="1">1</button>
+                <button onclick="this.blur();" class="number-buttons" value="2">2</button>
+                <button onclick="this.blur();" class="number-buttons" value="3">3</button>
+                <button onclick="this.blur();" class="operators-buttons non-numbers" value="-" id="subtract-button">-</button>
             </div>
             <div class="fifth-row">
-                <button onlick="this.blur();" class="number-buttons non-numbers" value=".">.</button>
-                <button onlick="this.blur();" class="number-buttons" value="0">0</button>
-                <button onlick="this.blur();" class="operators-buttons non-numbers" value="+" id="add-button">+</button>
-                <button onlick="this.blur();" class="non-numbers" id="equals-button" value="=">=</button>
+                <button onclick="this.blur();" class="number-buttons non-numbers" value=".">.</button>
+                <button onclick="this.blur();" class="number-buttons" value="0">0</button>
+                <button onclick="this.blur();" class="operators-buttons non-numbers" value="+" id="add-button">+</button>
+                <button onclick="this.blur();" class="non-numbers" id="equals-button" value="=">=</button>
             </div>
         </div>
     </div>
     <div class="footer">
-        <p> Cop</p>
-        <i class="bi bi-github"></i>
+        <p>Copyright ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script>
+            arijanbrkic
+          </p>
+          <a href="https://github.com/arijanbrkic" target="_blank">
+            <i class="fab fa-github"></i></a>
     </div>
     <script src="javascript/script.js"></script>
 </body>
